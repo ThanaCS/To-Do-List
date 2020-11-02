@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.thanaa.to_do_list.TodoTypeConverters
 import com.thanaa.to_do_list.data.models.TodoData
 
 
 @Database(entities = [TodoData::class], version = 1, exportSchema = false)
+@TypeConverters(TodoTypeConverters::class)
 abstract class TodoDatabase : RoomDatabase() {
     abstract fun toDoDao(): TodoDao
 
