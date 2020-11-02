@@ -2,4 +2,8 @@
     <string name="app_name">To-Do-List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="emptyList">You have no tasks to do.</string>
+    <string name="task_completed">Task completed</string>
+    <string name="task_name">Task Name</string>
+    <string name="description">Description</string>
 </resources>
