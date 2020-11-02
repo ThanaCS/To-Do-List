@@ -6,7 +6,7 @@
     android:padding="24dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundLight"
-    tools:context=".fragments.update.UpdateFragment">
+    tools:context=".fragment.update.UpdateFragment">
 
     <EditText
         android:id="@+id/current_title"

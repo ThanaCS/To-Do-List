@@ -1,4 +1,4 @@
-package com.thanaa.to_do_list.fragments.list
+package com.thanaa.to_do_list.fragment.list
 
 import android.os.Bundle
 import android.view.*
@@ -21,7 +21,7 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-        view.listLayout.setOnClickListener(){
+        view.listLayout.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
         //Menu of Deletion and Sorting

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundLight"
     android:padding="24dp"
-    tools:context=".fragments.add.AddFragment">
+    tools:context=".fragment.add.AddFragment">
 
 
     <EditText
