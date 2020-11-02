@@ -1,10 +1,8 @@
 package com.thanaa.to_do_list.fragments.list
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.thanaa.to_do_list.R
 import kotlinx.android.synthetic.main.fragment_list.view.*
@@ -22,8 +20,17 @@ class ListFragment : Fragment() {
         view.floatingActionButton.setOnClickListener{
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
+
+        view.listLayout.setOnClickListener(){
+            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
+        }
+        //Menu of Deletion and Sorting
+        setHasOptionsMenu(true)
         return view
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu,menu)
+    }
 
 }

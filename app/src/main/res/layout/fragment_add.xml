@@ -12,10 +12,13 @@
     <EditText
         android:id="@+id/title"
         android:layout_width="0dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/task_name"
+        android:background="@drawable/custom_input"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.458"
@@ -24,7 +27,11 @@
 
     <EditText
         android:id="@+id/description"
+        android:background="@drawable/custom_input"
         android:layout_width="0dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="24dp"
         android:layout_height="151dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -46,14 +53,6 @@
         app:layout_constraintTop_toBottomOf="@+id/description"
         tools:text="Wed Nov 14 11:56 EST 2018" />
 
-    <CheckBox
-        android:id="@+id/iscompleted"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/task_completed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        app:layout_constraintVertical_bias="0.088"
-        tools:layout_editor_absoluteX="22dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
