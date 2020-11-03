@@ -1,5 +1,6 @@
 package com.thanaa.to_do_list.fragment.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -61,10 +62,15 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_save)
-            updateItem()
+
+        when (item.itemId) {
+            R.id.menu_save -> updateItem()
+            R.id.menu_delete -> confirmItemRemoval()
+
+        }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun updateItem() {
         val title = current_title.text.toString()
@@ -87,6 +93,20 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
             Toast.makeText(requireContext(), "Pleas fill out the empty fields ", Toast.LENGTH_SHORT)
                 .show()
         }
+    }
+
+    private fun confirmItemRemoval() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            mTodoViewModel.deleteItem(args.currentItem)
+            Toast.makeText(requireContext(), "Successfully Removed:", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        builder.setNegativeButton("No") { _, _ -> }
+        builder.setTitle("Delete '${args.currentItem.title}'")
+        builder.setMessage("Are you sure you want to remove '${args.currentItem.title}?'")
+        builder.create().show()
+
     }
 
     override fun onDateSelected(date: Date) {
