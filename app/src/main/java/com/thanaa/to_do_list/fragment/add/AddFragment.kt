@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 import java.util.*
 
 const val TAG = "AddFragment"
-private const val REQUEST_DATE = 0
-private const val DIALOG_DATE = "DialogDate"
+const val REQUEST_DATE = 0
+const val DIALOG_DATE = "DialogDate"
 
 class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     private val mToDoViewModel: TodoViewModel by viewModels()

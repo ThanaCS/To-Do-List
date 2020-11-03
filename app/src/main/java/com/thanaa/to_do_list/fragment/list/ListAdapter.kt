@@ -35,10 +35,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemView.title_tv.text = dataList[position].title
         holder.itemView.description_tv.text = dataList[position].description
-        //when user clicks on item it navigate to update
-        holder.itemView.row_background.setOnClickListener {
 
-            holder.itemView.findNavController().navigate(R.id.action_listFragment_to_updateFragment)
+        //when user clicks on item it navigate to update of the data postion
+        holder.itemView.row_background.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
+            holder.itemView.findNavController().navigate(action)
         }
         val mDate = DateFormat.format("EEE, MMM, dd", dataList[position].date).toString()
         holder.itemView.date_tv.text = mDate

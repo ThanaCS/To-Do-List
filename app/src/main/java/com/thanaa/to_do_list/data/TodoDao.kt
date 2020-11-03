@@ -1,10 +1,7 @@
 package com.thanaa.to_do_list.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.thanaa.to_do_list.data.models.TodoData
 
 @Dao
@@ -14,4 +11,7 @@ interface TodoDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(todoData: TodoData)
+
+    @Update
+    suspend fun updateDate(todoData: TodoData)
 }
