@@ -88,7 +88,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
             Toast.makeText(requireContext(), "Successfully Added ", Toast.LENGTH_SHORT).show()
             findNavController().navigate((R.id.action_addFragment_to_listFragment))
         } else {
-            Toast.makeText(requireContext(), "Field are empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Fields are empty", Toast.LENGTH_SHORT).show()
         }
 
     }

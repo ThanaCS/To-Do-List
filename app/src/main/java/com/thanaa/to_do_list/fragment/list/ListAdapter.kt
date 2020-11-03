@@ -18,6 +18,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<TodoData>()
     private lateinit var completedImage: ImageView
+    private lateinit var pastDueIndicator: ImageView
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
@@ -25,6 +26,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_layout, parent, false)
         completedImage = view.findViewById(R.id.Checkcompleted) as ImageView
+        pastDueIndicator = view.findViewById(R.id.due_past) as ImageView
         return MyViewHolder(view)
     }
 
@@ -44,13 +46,22 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val mDate = DateFormat.format("EEE, MMM, dd", dataList[position].date).toString()
         holder.itemView.date_tv.text = mDate
         //check if the user completed the task or not
-
         val taskCompleted = dataList[position].isCompleted
         if (taskCompleted) {
             completedImage.visibility = View.VISIBLE
         } else {
             completedImage.visibility = View.INVISIBLE
         }
+
+        //check if the task past due
+        val taskDate = dataList[position].date
+        if (System.currentTimeMillis() > taskDate.time && taskCompleted == false) {
+            pastDueIndicator.visibility = View.VISIBLE
+        } else {
+            pastDueIndicator.visibility = View.INVISIBLE
+        }
+
+
         //random colors for the card view
 
         var rand = Random().nextInt(8)
