@@ -58,7 +58,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         }
 
         completedCheckBox.setOnClickListener {
-            isComplete = true
+            isComplete = !isComplete
         }
 
         return view

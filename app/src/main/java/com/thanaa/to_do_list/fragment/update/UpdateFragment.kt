@@ -3,6 +3,7 @@ package com.thanaa.to_do_list.fragment.update
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +25,8 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
     private val args by navArgs<UpdateFragmentArgs>()
     private val mTodoViewModel: TodoViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
+    private var isComplete = false
+    private lateinit var completedCheckBox: CheckBox
     private lateinit var dateButton: Button
     var date = Date()
     override fun onCreateView(
@@ -32,7 +35,11 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         dateButton = view.findViewById(R.id.current_date) as Button
+        completedCheckBox = view.findViewById(R.id.current_isCompleted) as CheckBox
 
+        completedCheckBox.setOnClickListener {
+            args.currentItem.isCompleted = !args.currentItem.isCompleted
+        }
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(args.currentItem.date).apply {
                 setTargetFragment(this@UpdateFragment, REQUEST_DATE)
@@ -44,6 +51,7 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
         view.current_title.setText(args.currentItem.title)
         view.current_description.setText(args.currentItem.description)
         view.current_date.text = args.currentItem.date.toString()
+        view.current_isCompleted.isChecked = args.currentItem.isCompleted
 
         return view
     }
@@ -61,9 +69,7 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
     private fun updateItem() {
         val title = current_title.text.toString()
         val description = current_description.text.toString()
-        val stringDate = current_date.text.toString()
 
-        val isCompleted = args.currentItem.isCompleted
 
         val validation = mSharedViewModel.verifyDataFormUser(title, description)
         if (validation) {
@@ -72,7 +78,7 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
                 title,
                 description,
                 args.currentItem.date,
-                isCompleted
+                args.currentItem.isCompleted
             )
             mTodoViewModel.updateData(updatedItem)
             Toast.makeText(requireContext(), "Successfully Updated", Toast.LENGTH_SHORT).show()
