@@ -8,4 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundLight">#F5F9FD</color>
+
+
+    <item name="c0" type="color">#C4E538</item>
+    <item name="c1" type="color">#FFC312</item>
+    <item name="c2" type="color">#F79F1F</item>
+    <item name="c3" type="color">#EE5A24</item>
+    <item name="c4" type="color">#009432</item>
+    <item name="c5" type="color">#0652DD</item>
+    <item name="c6" type="color">#5758BB</item>
+    <item name="c7" type="color">#A3CB38</item>
+    <item name="c8" type="color">#9980FA</item>
+
+
 </resources>

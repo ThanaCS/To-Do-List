@@ -1,7 +1,6 @@
 package com.thanaa.to_do_list.fragment.add
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -80,7 +79,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     private fun insertDataToDb() {
         val mTitle = title.text.toString()
         val mDescription = description.text.toString()
-        val mDate = DateFormat.format("EEE, MMM, dd", todo.date).toString()
         val validation = mSharedViewModel.verifyDataFormUser(mTitle, mDescription)
         //not null insert to database
         if (validation) {
