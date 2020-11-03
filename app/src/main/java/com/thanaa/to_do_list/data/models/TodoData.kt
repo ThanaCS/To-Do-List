@@ -6,10 +6,10 @@ import java.util.*
 
 @Entity(tableName = "todo_table")
 data class TodoData(
-    @PrimaryKey(autoGenerate = true)
-    val id:Int,
-    val title:String,
-    val description: String,
-    val date:Date,
-    val isCompleted:Boolean
+        @PrimaryKey(autoGenerate = true)
+        var id: Int,
+        var title: String,
+        var description: String,
+        var date: Date = Date(),
+        var isCompleted: Boolean
 )

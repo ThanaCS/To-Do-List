@@ -1,8 +1,9 @@
 package com.thanaa.to_do_list.fragment.add
 
 import android.os.Bundle
-import android.text.TextUtils
+import android.text.format.DateFormat
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,19 +11,47 @@ import androidx.navigation.fragment.findNavController
 import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.data.models.TodoData
 import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
+import com.thanaa.to_do_list.fragment.DatePickerFragment
+import com.thanaa.to_do_list.fragment.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
+import java.time.LocalDateTime
 import java.util.*
 
-class AddFragment : Fragment() {
+const val TAG = "AddFragment"
+private const val REQUEST_DATE = 0
+private const val DIALOG_DATE = "DialogDate"
+
+class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     private val mToDoViewModel: TodoViewModel by viewModels()
 
+    //sharing function between add and update fragment
+    private val mSharedViewModel: SharedViewModel by viewModels()
+    private lateinit var todo: TodoData
+    private lateinit var dateButton: Button
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val current = LocalDateTime.now()
+
+        var initDate = Calendar.getInstance().time
+
+        todo = TodoData(0, "", "", initDate, false)
+
+
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         setHasOptionsMenu(true)
-
+        dateButton = view.findViewById(R.id.dateButton) as Button
+        dateButton.setOnClickListener {
+            DatePickerFragment.newInstance(todo.date).apply {
+                setTargetFragment(this@AddFragment, REQUEST_DATE)
+                show(this@AddFragment.requireFragmentManager(), DIALOG_DATE)
+            }
+        }
 
         return view
     }
@@ -42,12 +71,13 @@ class AddFragment : Fragment() {
     private fun insertDataToDb() {
         val mTitle = title.text.toString()
         val mDescription = description.text.toString()
-        val mDate = date.text.toString() as Date
-        val mIsCompleted = isCompleted.text.toString() as Boolean
-        val validation = verifyDataFormUser(mTitle, mDescription)
+        val mDate = DateFormat.format("EEE, MMM, dd", todo.date).toString()
+        val mIsCompleted = isCompleted.text.toString().toBoolean()
+
+        val validation = mSharedViewModel.verifyDataFormUser(mTitle, mDescription)
+        //not null insert to database
         if (validation) {
-            //not null insert to database
-            val newData = TodoData(0, mTitle, mDescription, mDate, mIsCompleted)
+            val newData = TodoData(0, mTitle, mDescription, todo.date, mIsCompleted)
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully Added ", Toast.LENGTH_SHORT).show()
             findNavController().navigate((R.id.action_addFragment_to_listFragment))
@@ -57,12 +87,10 @@ class AddFragment : Fragment() {
 
     }
 
-    private fun verifyDataFormUser(title: String, description: String): Boolean {
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
-            false
-        } else !(title.isEmpty() || description.isEmpty())
 
-
+    override fun onDateSelected(date: Date) {
+        todo.date = date
+        dateButton.text = todo.date.toString()
     }
 
 
