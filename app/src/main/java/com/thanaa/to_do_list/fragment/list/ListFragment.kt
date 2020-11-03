@@ -38,10 +38,8 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-        view.listLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
-        }
-        emptyView()
+
+//        emptyView()
         //Menu of Deletion and Sorting
         setHasOptionsMenu(true)
         return view
@@ -51,17 +49,17 @@ class ListFragment : Fragment() {
         inflater.inflate(R.menu.list_fragment_menu, menu)
     }
 
-    private fun emptyView() {
-        if (adapter.itemCount == 0) {
-
-            recyclerView.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
-        } else {
-            emptyView.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
-
-        }
-    }
+//    private fun emptyView() {
+//        if (adapter.itemCount == 0) {
+//
+//            recyclerView.visibility = View.GONE
+//            emptyView.visibility = View.VISIBLE
+//        } else {
+//            emptyView.visibility = View.GONE
+//            recyclerView.visibility = View.VISIBLE
+//
+//        }
+//    }
 
 
 }
