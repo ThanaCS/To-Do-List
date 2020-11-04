@@ -1,6 +1,5 @@
 package com.thanaa.to_do_list.fragment.add
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -22,13 +21,6 @@ const val REQUEST_DATE = 0
 const val DIALOG_DATE = "DialogDate"
 
 class AddFragment : Fragment(), DatePickerFragment.Callbacks {
-
-    lateinit var datePasser: OnDatePass
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        datePasser = context as OnDatePass
-    }
 
     private val mToDoViewModel: TodoViewModel by viewModels()
 
@@ -106,9 +98,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         dateButton.text = todo.date.toString()
     }
 
-    fun passDate(date: Date) {
-        datePasser.onDatePass(date)
-    }
 }
 
 interface OnDatePass {

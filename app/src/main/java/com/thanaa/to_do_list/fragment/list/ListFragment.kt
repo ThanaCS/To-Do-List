@@ -51,7 +51,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             //TODO
             //Notification
             data.forEach {
+                val taskDate = it.date
                 passDate(it.date)
+
+                //check if the task past due
+
             }
 
 

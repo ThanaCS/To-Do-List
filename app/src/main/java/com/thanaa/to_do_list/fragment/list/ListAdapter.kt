@@ -2,6 +2,7 @@ package com.thanaa.to_do_list.fragment.list
 
 
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.data.models.TodoData
 import kotlinx.android.synthetic.main.row_layout.view.*
+import java.util.*
 
 
 const val TAG = "ListAdapter"
@@ -56,11 +58,17 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         //check if the task past due
         val taskDate = dataList[position].date
-        if (System.currentTimeMillis() > taskDate.time && taskCompleted == false) {
+        var prevDay = System.currentTimeMillis() - 1000 * 60 * 60 * 24
+        val prev = Date(prevDay)
+        if (taskDate.before(prev) && taskCompleted == false) {
             pastDueIndicator.visibility = View.VISIBLE
 
-        } else {
+        } else if (DateUtils.isToday(taskDate.time) && taskCompleted == false) {
+
+
             pastDueIndicator.visibility = View.INVISIBLE
+        } else {
+//            pastDueIndicator.visibility = View.INVISIBLE
         }
 
         when (dataList[position].id % 2 == 0) {
