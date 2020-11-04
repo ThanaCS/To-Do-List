@@ -19,7 +19,7 @@ import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.SwipeToDelete
 import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
 import com.thanaa.to_do_list.fragment.SharedViewModel
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.util.*
 
@@ -48,8 +48,9 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         swipeToDelete(recyclerView)
         //Animation
-        recyclerView.itemAnimator = SlideInDownAnimator().apply {
-            addDuration = 300
+        recyclerView.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 1000
+
         }
         mTodoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
@@ -169,10 +170,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemToDelete = adapter.dataList[viewHolder.adapterPosition]
                 mTodoViewModel.deleteItem(itemToDelete)
+
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Toast.makeText(
-                    requireContext(),
-                    "'${itemToDelete.title}' has been deleted",
-                    Toast.LENGTH_SHORT
+                    requireContext(), "'${itemToDelete.title}' has been deleted", Toast.LENGTH_SHORT
                 ).show()
             }
         }
