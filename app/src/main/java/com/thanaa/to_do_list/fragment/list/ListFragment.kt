@@ -29,7 +29,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onAttach(context)
         datePasser = context as OnDatePass
     }
-
     private val mTodoViewModel: TodoViewModel by viewModels()
     private lateinit var emptyView: ImageView
     private val mSharedViewModel: SharedViewModel by viewModels()
@@ -161,12 +160,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
     }
-
     fun passDate(date: Date) {
         datePasser.onDatePass(date)
     }
 }
-
 interface OnDatePass {
     fun onDatePass(date: Date)
 }

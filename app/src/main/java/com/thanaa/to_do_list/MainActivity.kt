@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), OnDatePass {
     private val description = "Notification"
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity(), OnDatePass {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
     override fun onDatePass(date: Date) {
         //Notification
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
