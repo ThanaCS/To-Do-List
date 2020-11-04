@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
 import com.thanaa.to_do_list.fragment.SharedViewModel
-import com.thanaa.to_do_list.fragment.add.OnDatePass
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.util.*
 
@@ -48,18 +47,13 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         mTodoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
-            //TODO
-            //Notification
             data.forEach {
-                //Tomorrow
-//                if(DateUtils.isToday(it.date.getTime() - DateUtils.DAY_IN_MILLIS))
-                passDate(it.date)
+                // for the Notification
+                passDate(it.date, it.title)
             }
 
 
         })
-
-
 
         //check if the database is empty to show empty view
         mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
@@ -162,10 +156,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
     }
-    fun passDate(date: Date) {
-        datePasser.onDatePass(date)
+
+    fun passDate(date: Date, title: String) {
+        datePasser.onDatePass(date, title)
     }
 }
 interface OnDatePass {
-    fun onDatePass(date: Date)
+    fun onDatePass(date: Date, title: String)
 }

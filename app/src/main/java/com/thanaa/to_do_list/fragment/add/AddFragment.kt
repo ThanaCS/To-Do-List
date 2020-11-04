@@ -99,7 +99,3 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     }
 
 }
-
-interface OnDatePass {
-    fun onDatePass(date: Date)
-}

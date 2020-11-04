@@ -10,7 +10,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.thanaa.to_do_list.fragment.add.OnDatePass
+import com.thanaa.to_do_list.fragment.list.OnDatePass
 
 import java.util.*
 
@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity(), OnDatePass {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-    override fun onDatePass(date: Date) {
+
+    override fun onDatePass(date: Date, title: String) {
         //Notification
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         var intent = Intent(this, LauncherActivity::class.java)
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity(), OnDatePass {
 
                 builder =
                     Notification.Builder(this, channelId).setContentTitle("Complete Your Tasks")
-                        .setContentText("You have tasks to do")
+                        .setContentText("You have to $title")
                         .setSmallIcon(R.drawable.notification)
                         .setLargeIcon(
                             BitmapFactory.decodeResource(
@@ -66,10 +67,9 @@ class MainActivity : AppCompatActivity(), OnDatePass {
                         )
                         .setContentIntent(pending)
 
-
             } else {
                 builder = Notification.Builder(this)
-                    .setContentText("Complete Your Tasks")
+                    .setContentText("You have to $title")
                     .setSmallIcon(R.drawable.notification)
                     .setLargeIcon(
                         BitmapFactory.decodeResource(
