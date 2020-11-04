@@ -67,20 +67,20 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintHorizontal_bias="0.983"
             app:layout_constraintStart_toEndOf="@+id/RandomCardView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/due_past"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/due"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.959"
+            app:layout_constraintHorizontal_bias="0.988"
             app:layout_constraintStart_toEndOf="@+id/RandomCardView"
             app:layout_constraintTop_toTopOf="parent" />
 

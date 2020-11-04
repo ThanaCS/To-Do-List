@@ -12,14 +12,20 @@ import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private val todoDao = TodoDatabase.getDatabase(
-        application
+            application
     ).toDoDao()
     private val repository: TodoRepository
     val getAllData: LiveData<List<TodoData>>
+    val sortByNewDate: LiveData<List<TodoData>>
+    val sortByOldDate: LiveData<List<TodoData>>
+    val sortByTitle: LiveData<List<TodoData>>
 
     init {
         repository = TodoRepository(todoDao)
         getAllData = repository.getAllData
+        sortByNewDate = repository.sortByNewDate
+        sortByOldDate = repository.sortByOldDate
+        sortByTitle = repository.sortByTitle
     }
 
     fun insertData(todoDate: TodoData) {

@@ -20,4 +20,14 @@ interface TodoDao {
 
     @Query("DELETE FROM todo_table")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM todo_table ORDER BY date DESC")
+    fun sortByNewDate(): LiveData<List<TodoData>>
+
+    @Query("SELECT * FROM todo_table ORDER BY date ASC")
+    fun sortByOldDate(): LiveData<List<TodoData>>
+
+    @Query("SELECT * FROM todo_table ORDER BY title ASC")
+    fun sortByTitle(): LiveData<List<TodoData>>
+
 }

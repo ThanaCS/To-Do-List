@@ -1,6 +1,7 @@
 package com.thanaa.to_do_list.fragment.list
 
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.row_layout.view.*
 import java.util.*
 
 
+const val TAG = "ListAdapter"
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<TodoData>()
@@ -57,25 +59,22 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val taskDate = dataList[position].date
         if (System.currentTimeMillis() > taskDate.time && taskCompleted == false) {
             pastDueIndicator.visibility = View.VISIBLE
+
         } else {
             pastDueIndicator.visibility = View.INVISIBLE
         }
 
-
-        //random colors for the card view
-
         var rand = Random().nextInt(8)
-        when (rand) {
-            0 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c0))
-            1 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c1))
-            2 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c2))
-            3 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c3))
-            4 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c4))
-            5 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c5))
-            6 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c6))
-            7 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c7))
-            8 -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.c8))
+        Log.d(TAG, "${dataList[position].id}")
+
+
+        when (dataList[position].id % 2 == 0) {
+            true -> holder.itemView.RandomCardView.setCardBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context,
+                            R.color.purple_500))
+            false -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.bright_pink))
         }
+
 
     }
 

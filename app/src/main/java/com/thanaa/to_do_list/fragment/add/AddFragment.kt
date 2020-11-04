@@ -15,7 +15,6 @@ import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
 import com.thanaa.to_do_list.fragment.DatePickerFragment
 import com.thanaa.to_do_list.fragment.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
-import java.time.LocalDateTime
 import java.util.*
 
 const val TAG = "AddFragment"
@@ -33,7 +32,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     private var isComplete = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val current = LocalDateTime.now()
 
         var initDate = Calendar.getInstance().time
 
@@ -50,6 +48,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         setHasOptionsMenu(true)
         dateButton = view.findViewById(R.id.dateButton) as Button
         completedCheckBox = view.findViewById(R.id.isCompleted) as CheckBox
+
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(todo.date).apply {
                 setTargetFragment(this@AddFragment, REQUEST_DATE)
@@ -88,7 +87,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
             Toast.makeText(requireContext(), "Successfully Added ", Toast.LENGTH_SHORT).show()
             findNavController().navigate((R.id.action_addFragment_to_listFragment))
         } else {
-            Toast.makeText(requireContext(), "Fields are empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Fields Are Empty", Toast.LENGTH_SHORT).show()
         }
 
     }

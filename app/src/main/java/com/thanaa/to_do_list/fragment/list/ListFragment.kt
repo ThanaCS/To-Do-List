@@ -47,7 +47,6 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
-
         //Menu of Deletion and Sorting
         setHasOptionsMenu(true)
         return view
@@ -70,10 +69,16 @@ class ListFragment : Fragment() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete_all)
-            confirmRemoval()
+        when (item.itemId) {
+            R.id.menu_delete_all -> confirmRemoval()
+            R.id.newest -> mTodoViewModel.sortByNewDate.observe(this, Observer { adapter.setData(it) })
+            R.id.oldest -> mTodoViewModel.sortByOldDate.observe(this, Observer { adapter.setData(it) })
+            R.id.alphabetical_order -> mTodoViewModel.sortByTitle.observe(this, Observer { adapter.setData(it) })
+        }
+
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
