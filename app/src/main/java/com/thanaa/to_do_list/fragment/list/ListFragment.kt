@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.thanaa.to_do_list.R
+import com.thanaa.to_do_list.SwipeToDelete
 import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
 import com.thanaa.to_do_list.fragment.SharedViewModel
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.util.*
 
@@ -43,7 +46,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         recyclerView = view.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-
+        swipeToDelete(recyclerView)
+        //Animation
+        recyclerView.itemAnimator = SlideInDownAnimator().apply {
+            addDuration = 300
+        }
         mTodoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
@@ -51,7 +58,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                 // for the Notification
                 passDate(it.date, it.title)
             }
-
 
         })
 
@@ -155,11 +161,29 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                 )
             }
         }
+
+    }
+
+    private fun swipeToDelete(recycleView: RecyclerView) {
+        val swipeToDeleteCallBack = object : SwipeToDelete() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val itemToDelete = adapter.dataList[viewHolder.adapterPosition]
+                mTodoViewModel.deleteItem(itemToDelete)
+                Toast.makeText(
+                    requireContext(),
+                    "'${itemToDelete.title}' has been deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+        itemTouchHelper.attachToRecyclerView(recycleView)
     }
 
     fun passDate(date: Date, title: String) {
         datePasser.onDatePass(date, title)
     }
+
 }
 interface OnDatePass {
     fun onDatePass(date: Date, title: String)
