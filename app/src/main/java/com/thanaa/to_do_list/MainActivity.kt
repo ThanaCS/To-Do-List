@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity(), OnDatePass {
         var intent = Intent(this, LauncherActivity::class.java)
         val pending =
             PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
-
-
-        if (System.currentTimeMillis() >= date.time) {
+        var currentTime = System.currentTimeMillis() - 1000 * 60 * 60 * 24
+        val current = Date(currentTime)
+        if (date.before(current)) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 notificationChannel =

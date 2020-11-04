@@ -2,7 +2,6 @@ package com.thanaa.to_do_list.fragment.list
 
 
 import android.text.format.DateFormat
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,26 +54,27 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         } else {
             completedImage.visibility = View.INVISIBLE
         }
-
         //check if the task past due
         val taskDate = dataList[position].date
-        var prevDay = System.currentTimeMillis() - 1000 * 60 * 60 * 24
-        val prev = Date(prevDay)
-        if (taskDate.before(prev) && taskCompleted == false) {
+        var currentTime = System.currentTimeMillis() - 1000 * 60 * 60 * 24
+        val current = Date(currentTime)
+        if (taskDate.before(current) && taskCompleted == false) {
             pastDueIndicator.visibility = View.VISIBLE
 
-        } else if (DateUtils.isToday(taskDate.time) && taskCompleted == false) {
-
-
-            pastDueIndicator.visibility = View.INVISIBLE
         } else {
-//            pastDueIndicator.visibility = View.INVISIBLE
+            pastDueIndicator.visibility = View.INVISIBLE
         }
 
         when (dataList[position].id % 2 == 0) {
             true -> holder.itemView.RandomCardView.setCardBackgroundColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.purple_500))
-            false -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.bright_pink))
+                ContextCompat.getColor(holder.itemView.context, R.color.purple_500)
+            )
+            false -> holder.itemView.RandomCardView.setCardBackgroundColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.bright_pink
+                )
+            )
         }
 
 
