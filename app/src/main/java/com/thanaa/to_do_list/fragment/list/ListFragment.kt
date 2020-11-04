@@ -17,10 +17,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.data.viewmodel.TodoViewModel
 import com.thanaa.to_do_list.fragment.SharedViewModel
+import com.thanaa.to_do_list.fragment.add.OnDatePass
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.util.*
 
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
+    lateinit var datePasser: OnDatePass
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        datePasser = context as OnDatePass
+    }
 
     private val mTodoViewModel: TodoViewModel by viewModels()
     private lateinit var emptyView: ImageView
@@ -28,8 +36,8 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     private val adapter: ListAdapter by lazy { ListAdapter() }
     lateinit var recyclerView: RecyclerView
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
@@ -41,13 +49,24 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         mTodoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
+            //TODO
+            //Notification
+            data.forEach {
+                passDate(it.date)
+            }
+
+
         })
+
 
 
         //check if the database is empty to show empty view
         mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
             showEmptyView(it)
         })
+
+
+
         view.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
@@ -132,15 +151,22 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     fun hideKeyboard() {
         activity?.let {
             val inputManager =
-                    it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             val view = it.currentFocus
             if (view != null) {
                 inputManager.hideSoftInputFromWindow(
-                        view.windowToken,
-                        InputMethodManager.HIDE_NOT_ALWAYS
+                    view.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
                 )
             }
         }
     }
 
+    fun passDate(date: Date) {
+        datePasser.onDatePass(date)
+    }
+}
+
+interface OnDatePass {
+    fun onDatePass(date: Date)
 }

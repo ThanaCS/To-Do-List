@@ -19,43 +19,9 @@ class MainActivity : AppCompatActivity(), OnDatePass {
     lateinit var notificationManager: NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var builder: Notification.Builder
-    private val channelId = "com.thanaa.nf"
-    private val descreption = "Test notification"
+    private val channelId = "com.thanaa.to_do_list"
+    private val description = "Notification"
 
-    override fun onDatePass(date: Date) {
-        //Notification
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        var intent = Intent(this, LauncherActivity::class.java)
-        val pending = PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
-
-
-        if (System.currentTimeMillis() >= date.time) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationChannel = NotificationChannel(channelId, descreption, NotificationManager.IMPORTANCE_HIGH)
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.RED
-                notificationChannel.enableVibration(true)
-                notificationManager.createNotificationChannel(notificationChannel)
-
-                builder = Notification.Builder(this, channelId).setContentTitle("Complete your tasks")
-                        .setContentText("You Have Tasks to do")
-                        .setSmallIcon(R.drawable.notification)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-                        .setContentIntent(pending)
-
-
-            } else {
-                builder = Notification.Builder(this)
-                        .setContentText("Complete your tasks")
-                        .setSmallIcon(R.drawable.notification)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-                        .setContentIntent(pending)
-            }
-            notificationManager.notify(1234, builder.build())
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +30,58 @@ class MainActivity : AppCompatActivity(), OnDatePass {
         setupActionBarWithNavController(findNavController(R.id.navHostFragment))
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
+    override fun onDatePass(date: Date) {
+        //Notification
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var intent = Intent(this, LauncherActivity::class.java)
+        val pending =
+            PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+        if (System.currentTimeMillis() >= date.time) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel =
+                    NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.GREEN
+                notificationChannel.enableVibration(true)
+                notificationManager.createNotificationChannel(notificationChannel)
+
+                builder =
+                    Notification.Builder(this, channelId).setContentTitle("Complete Your Tasks")
+                        .setContentText("You have tasks to do")
+                        .setSmallIcon(R.drawable.notification)
+                        .setLargeIcon(
+                            BitmapFactory.decodeResource(
+                                this.resources,
+                                R.drawable.ic_launcher_background
+                            )
+                        )
+                        .setContentIntent(pending)
+
+
+            } else {
+                builder = Notification.Builder(this)
+                    .setContentText("Complete Your Tasks")
+                    .setSmallIcon(R.drawable.notification)
+                    .setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            this.resources,
+                            R.drawable.ic_launcher_background
+                        )
+                    )
+                    .setContentIntent(pending)
+            }
+            notificationManager.notify(1234, builder.build())
+        }
+
+    }
 
 }

@@ -2,7 +2,6 @@ package com.thanaa.to_do_list.fragment.list
 
 
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thanaa.to_do_list.R
 import com.thanaa.to_do_list.data.models.TodoData
 import kotlinx.android.synthetic.main.row_layout.view.*
-import java.util.*
 
 
 const val TAG = "ListAdapter"
@@ -64,11 +62,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         } else {
             pastDueIndicator.visibility = View.INVISIBLE
         }
-
-
-        var rand = Random().nextInt(8)
-        Log.d(TAG, "${dataList[position].id}")
-
 
         when (dataList[position].id % 2 == 0) {
             true -> holder.itemView.RandomCardView.setCardBackgroundColor(

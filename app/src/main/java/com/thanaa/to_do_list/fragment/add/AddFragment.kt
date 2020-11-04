@@ -64,9 +64,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
 
         }
 
-        //Notification
-        passDate(todo.date)
-
         completedCheckBox.setOnClickListener {
             isComplete = !isComplete
         }
@@ -92,6 +89,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         val validation = mSharedViewModel.verifyDataFormUser(mTitle, mDescription)
         //not null insert to database
         if (validation) {
+
             val newData = TodoData(0, mTitle, mDescription, todo.date, isComplete)
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully Added ", Toast.LENGTH_SHORT).show()
