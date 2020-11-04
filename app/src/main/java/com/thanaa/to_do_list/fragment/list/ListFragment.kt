@@ -1,10 +1,13 @@
 package com.thanaa.to_do_list.fragment.list
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -17,7 +20,7 @@ import com.thanaa.to_do_list.fragment.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val mTodoViewModel: TodoViewModel by viewModels()
     private lateinit var emptyView: ImageView
@@ -65,6 +68,10 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_fragment_menu, menu)
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
     }
 
 
@@ -80,12 +87,39 @@ class ListFragment : Fragment() {
     }
 
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchInDB(query)
+            //Hide soft keys
+            hideKeyboard()
+        }
+        return true
+    }
+
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchInDB(query)
+        }
+        return true
+    }
+
+    private fun searchInDB(query: String) {
+        var searchQuery = query
+        searchQuery = "%$searchQuery%"
+        mTodoViewModel.searchTitle(searchQuery).observe(this, Observer { list ->
+            list?.let {
+                adapter.setData(it)
+            }
+        })
+    }
+
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
             mTodoViewModel.deleteAll()
             Toast.makeText(requireContext(), "Successfully Deleted All Tasks", Toast.LENGTH_SHORT)
-                .show()
+                    .show()
         }
         builder.setNegativeButton("No") { _, _ -> }
         builder.setTitle("Delete All Tasks")
@@ -93,5 +127,18 @@ class ListFragment : Fragment() {
         builder.create().show()
     }
 
+    fun hideKeyboard() {
+        activity?.let {
+            val inputManager =
+                    it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val view = it.currentFocus
+            if (view != null) {
+                inputManager.hideSoftInputFromWindow(
+                        view.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
+                )
+            }
+        }
+    }
 
 }

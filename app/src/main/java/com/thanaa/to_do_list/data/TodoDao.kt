@@ -30,4 +30,7 @@ interface TodoDao {
     @Query("SELECT * FROM todo_table ORDER BY title ASC")
     fun sortByTitle(): LiveData<List<TodoData>>
 
+    @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
+    fun searchTitle(searchQuery: String): LiveData<List<TodoData>>
+
 }
