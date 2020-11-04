@@ -55,4 +55,5 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     fun searchTitle(searchQuery: String): LiveData<List<TodoData>> {
         return repository.searchTitle(searchQuery)
     }
+
 }

@@ -37,10 +37,12 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         recyclerView = view.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+
         mTodoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
         })
+
 
         //check if the database is empty to show empty view
         mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {

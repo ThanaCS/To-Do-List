@@ -1,5 +1,6 @@
 package com.thanaa.to_do_list.fragment.list
 
+
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,7 +26,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_layout, parent, false)
         completedImage = view.findViewById(R.id.Checkcompleted) as ImageView
         pastDueIndicator = view.findViewById(R.id.due_past) as ImageView
@@ -48,6 +48,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val mDate = DateFormat.format("EEE, MMM, dd", dataList[position].date).toString()
         holder.itemView.date_tv.text = mDate
         //check if the user completed the task or not
+
         val taskCompleted = dataList[position].isCompleted
         if (taskCompleted) {
             completedImage.visibility = View.VISIBLE
@@ -64,14 +65,14 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             pastDueIndicator.visibility = View.INVISIBLE
         }
 
+
         var rand = Random().nextInt(8)
         Log.d(TAG, "${dataList[position].id}")
 
 
         when (dataList[position].id % 2 == 0) {
             true -> holder.itemView.RandomCardView.setCardBackgroundColor(
-                    ContextCompat.getColor(holder.itemView.context,
-                            R.color.purple_500))
+                    ContextCompat.getColor(holder.itemView.context, R.color.purple_500))
             false -> holder.itemView.RandomCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.bright_pink))
         }
 

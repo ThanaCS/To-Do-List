@@ -1,7 +1,7 @@
 package com.thanaa.to_do_list.fragment.add
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
@@ -22,6 +22,14 @@ const val REQUEST_DATE = 0
 const val DIALOG_DATE = "DialogDate"
 
 class AddFragment : Fragment(), DatePickerFragment.Callbacks {
+
+    lateinit var datePasser: OnDatePass
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        datePasser = context as OnDatePass
+    }
+
     private val mToDoViewModel: TodoViewModel by viewModels()
 
     //sharing function between add and update fragment
@@ -36,7 +44,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         var initDate = Calendar.getInstance().time
 
         todo = TodoData(0, "", "", initDate, false)
-
 
     }
 
@@ -54,7 +61,11 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
                 setTargetFragment(this@AddFragment, REQUEST_DATE)
                 show(this@AddFragment.requireFragmentManager(), DIALOG_DATE)
             }
+
         }
+
+        //Notification
+        passDate(todo.date)
 
         completedCheckBox.setOnClickListener {
             isComplete = !isComplete
@@ -81,7 +92,6 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         val validation = mSharedViewModel.verifyDataFormUser(mTitle, mDescription)
         //not null insert to database
         if (validation) {
-            Log.d(TAG, "$isComplete")
             val newData = TodoData(0, mTitle, mDescription, todo.date, isComplete)
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully Added ", Toast.LENGTH_SHORT).show()
@@ -98,5 +108,11 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
         dateButton.text = todo.date.toString()
     }
 
+    fun passDate(date: Date) {
+        datePasser.onDatePass(date)
+    }
+}
 
+interface OnDatePass {
+    fun onDatePass(date: Date)
 }
