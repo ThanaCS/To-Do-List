@@ -104,6 +104,8 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.newest -> mTodoViewModel.sortByNewDate.observe(this, Observer { adapter.setData(it) })
             R.id.oldest -> mTodoViewModel.sortByOldDate.observe(this, Observer { adapter.setData(it) })
             R.id.alphabetical_order -> mTodoViewModel.sortByTitle.observe(this, Observer { adapter.setData(it) })
+
+
         }
 
         return super.onOptionsItemSelected(item)

@@ -20,12 +20,15 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     val sortByOldDate: LiveData<List<TodoData>>
     val sortByTitle: LiveData<List<TodoData>>
 
+
     init {
         repository = TodoRepository(todoDao)
         getAllData = repository.getAllData
         sortByNewDate = repository.sortByNewDate
         sortByOldDate = repository.sortByOldDate
         sortByTitle = repository.sortByTitle
+
+
     }
 
     fun insertData(todoDate: TodoData) {

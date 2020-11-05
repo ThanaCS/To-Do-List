@@ -33,4 +33,5 @@ interface TodoDao {
     @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
     fun searchTitle(searchQuery: String): LiveData<List<TodoData>>
 
+
 }

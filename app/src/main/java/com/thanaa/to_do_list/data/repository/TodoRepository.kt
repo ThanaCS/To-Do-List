@@ -10,6 +10,7 @@ class TodoRepository(private val todoDao: TodoDao) {
     val sortByOldDate: LiveData<List<TodoData>> = todoDao.sortByOldDate()
     val sortByTitle: LiveData<List<TodoData>> = todoDao.sortByTitle()
 
+
     fun searchTitle(searchQuery: String): LiveData<List<TodoData>> {
         return todoDao.searchTitle(searchQuery)
     }
@@ -25,6 +26,7 @@ class TodoRepository(private val todoDao: TodoDao) {
     suspend fun deleteItem(todoData: TodoData) {
         todoDao.deleteItem(todoData)
     }
+
 
     suspend fun deleteAll() {
         todoDao.deleteAll()
