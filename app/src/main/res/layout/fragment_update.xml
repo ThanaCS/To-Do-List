@@ -59,15 +59,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_description" />
 
-        <Button
-            android:id="@+id/current_date"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/current_date_tv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/current_isCompleted"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/current_date"
             app:layout_constraintTop_toBottomOf="@+id/current_description"
-            tools:text="Wed Nov 14 11:56 EST 2018" />
+            app:layout_constraintVertical_bias="0.75" />
+
+        <ImageView
+            android:id="@+id/current_date"
+            android:layout_width="65dp"
+            android:layout_height="67dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dateicon"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <CheckBox
             android:id="@+id/current_isCompleted"

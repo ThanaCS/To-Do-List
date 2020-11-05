@@ -2,9 +2,10 @@ package com.thanaa.to_do_list.fragment.update
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.*
-import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,16 +27,15 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
     private val args by navArgs<UpdateFragmentArgs>()
     private val mTodoViewModel: TodoViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
-    private var isComplete = false
     private lateinit var completedCheckBox: CheckBox
-    private lateinit var dateButton: Button
+    private lateinit var dateButton: ImageView
     var date = Date()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update, container, false)
-        dateButton = view.findViewById(R.id.current_date) as Button
+        dateButton = view.findViewById(R.id.current_date) as ImageView
         completedCheckBox = view.findViewById(R.id.current_isCompleted) as CheckBox
 
         completedCheckBox.setOnClickListener {
@@ -51,7 +51,8 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
         setHasOptionsMenu(true)
         view.current_title.setText(args.currentItem.title)
         view.current_description.setText(args.currentItem.description)
-        view.current_date.text = args.currentItem.date.toString()
+        val mDate = DateFormat.format("EEE, MMM, dd", args.currentItem.date).toString()
+        view.current_date_tv.text = mDate
         view.current_isCompleted.isChecked = args.currentItem.isCompleted
 
         return view
@@ -106,12 +107,11 @@ class UpdateFragment : Fragment(), DatePickerFragment.Callbacks {
         builder.setTitle("Delete '${args.currentItem.title}'")
         builder.setMessage("Are you sure you want to remove '${args.currentItem.title}?'")
         builder.create().show()
-
     }
-
     override fun onDateSelected(date: Date) {
         args.currentItem.date = date
-        dateButton.text = args.currentItem.date.toString()
+        val mDate = DateFormat.format("EEE, MMM, dd", args.currentItem.date).toString()
+        current_date_tv.text = mDate
     }
 
 

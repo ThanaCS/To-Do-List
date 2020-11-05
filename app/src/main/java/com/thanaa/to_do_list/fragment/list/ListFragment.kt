@@ -181,6 +181,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         itemTouchHelper.attachToRecyclerView(recycleView)
     }
 
+
     fun passDate(date: Date, title: String) {
         datePasser.onDatePass(date, title)
     }

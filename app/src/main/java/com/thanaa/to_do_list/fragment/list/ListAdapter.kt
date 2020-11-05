@@ -39,7 +39,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.itemView.title_tv.text = dataList[position].title
         holder.itemView.description_tv.text = dataList[position].description
 
-        //when user clicks on item it navigate to update of the data postion
+        //when user clicks on item it navigate to update of the data position
         holder.itemView.row_background.setOnClickListener {
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
             holder.itemView.findNavController().navigate(action)

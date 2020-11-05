@@ -1,9 +1,10 @@
 package com.thanaa.to_do_list.fragment.add
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.*
-import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +28,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
     //sharing function between add and update fragment
     private val mSharedViewModel: SharedViewModel by viewModels()
     private lateinit var todo: TodoData
-    private lateinit var dateButton: Button
+    private lateinit var dateButton: ImageView
     private lateinit var completedCheckBox: CheckBox
     private var isComplete = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
 
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         setHasOptionsMenu(true)
-        dateButton = view.findViewById(R.id.dateButton) as Button
+        dateButton = view.findViewById(R.id.dateButton) as ImageView
         completedCheckBox = view.findViewById(R.id.isCompleted) as CheckBox
 
         dateButton.setOnClickListener {
@@ -95,7 +96,8 @@ class AddFragment : Fragment(), DatePickerFragment.Callbacks {
 
     override fun onDateSelected(date: Date) {
         todo.date = date
-        dateButton.text = todo.date.toString()
+        val mDate = DateFormat.format("EEE, MMM, dd", todo.date).toString()
+        date_tv.text = mDate
     }
 
 }

@@ -15,5 +15,5 @@
     <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
-    <string name="pick_a_date">Pick Date:</string>
+    <string name="pick_a_date">Pick a Date:</string>
 </resources>
